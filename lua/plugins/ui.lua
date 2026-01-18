@@ -24,13 +24,4 @@ return {
       vim.g.highlightedyank_highlight_duration = 500
     end,
   },
-  {
-    "nathanaelkane/vim-indent-guides",
-    init = function()
-      vim.g.indent_guides_guide_size = 1
-      vim.g.indent_guides_start_level = 2
-      vim.g.indent_guides_space_guides = 0
-      vim.g.indent_guides_tab_guides = 0
-    end,
-  },
 }
