@@ -59,6 +59,6 @@ let g:everforest_inlay_hints_background = 'dimmed' " none
 "
 set background=dark
 " set background=light
-" colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-colorscheme onedark
+colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+" colorscheme onedark
 " colorscheme everforest
