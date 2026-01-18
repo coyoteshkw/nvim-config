@@ -43,6 +43,9 @@ return {
         { "<leader>w", desc = "Save File" },
         { "<leader>q", desc = "Quit" },
         { "<leader>n", desc = "No Highlight" },
+
+        { "<leader>t", group = "Toggle/Options" },
+        { "<leader>tf", "<cmd>ToggleAutoFormat<cr>", desc = "Autoformat on Save" },
       })
     end,
   },

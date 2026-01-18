@@ -126,6 +126,26 @@ return {
         nnoremap <silent><nowait> <space>sk  :<C-u>CocPrev<CR>
         nnoremap <silent><nowait> <space>sp  :<C-u>CocListResume<CR>
       ]])
+
+      -- Autoformat on save setup
+      vim.g.autoformat_enabled = true
+      
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("CocAutoFormat", { clear = true }),
+        pattern = "*",
+        callback = function()
+          if vim.g.autoformat_enabled then
+            -- We use pcall to avoid errors if CoC isn't attached or fails
+            -- Use synchronous 'format' to ensure it finishes before save
+            pcall(vim.fn.CocAction, 'format')
+          end
+        end,
+      })
+
+      vim.api.nvim_create_user_command("ToggleAutoFormat", function()
+        vim.g.autoformat_enabled = not vim.g.autoformat_enabled
+        vim.notify("Autoformat on save: " .. (vim.g.autoformat_enabled and "ON" or "OFF"), vim.log.levels.INFO)
+      end, {})
     end,
   },
 }
