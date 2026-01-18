@@ -36,6 +36,17 @@ return {
         { "<leader>gf", desc = "Lazygit File Log" },
         { "<leader>gg", desc = "Lazygit" },
         { "<leader>gl", desc = "Lazygit Log" },
+
+        { "<leader>h", group = "Hunk (Git)" },
+        { "<leader>hD", desc = "Diff This ~" },
+        { "<leader>hb", desc = "Blame Line" },
+        { "<leader>hd", desc = "Diff This" },
+        { "<leader>hp", desc = "Preview Hunk" },
+        { "<leader>hi", desc = "Preview Hunk Inline" },
+        { "<leader>hR", desc = "Reset Buffer" },
+        { "<leader>hS", desc = "Stage Buffer" },
+        { "<leader>hr", desc = "Reset Hunk" },
+        { "<leader>hs", desc = "Stage Hunk" },
         
         { "<leader>s", group = "Search (CoC)" },
         { "<leader>sc", desc = "Commands" },
@@ -53,6 +64,10 @@ return {
 
         { "<leader>t", group = "Toggle/Options" },
         { "<leader>tf", "<cmd>ToggleAutoFormat<cr>", desc = "Autoformat on Save" },
+        { "<leader>tL", desc = "Line Numbers" },
+        { "<leader>td", desc = "Diagnostics" },
+        { "<leader>tr", desc = "Relative Line Numbers" },
+        { "<leader>ts", desc = "Sign Column" },
       })
     end,
   },
