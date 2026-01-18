@@ -66,10 +66,10 @@ return {
 
         autocmd CursorHold * silent call CocActionAsync('highlight')
 
-        nmap <leader>rn <Plug>(coc-rename)
+        nmap <leader>cr <Plug>(coc-rename)
 
-        xmap <leader>f  <Plug>(coc-format-selected)
-        nmap <leader>f  <Plug>(coc-format-selected)
+        xmap <leader>cf  <Plug>(coc-format-selected)
+        nmap <leader>cf  <Plug>(coc-format-selected)
 
         augroup mygroup
           autocmd!
@@ -77,16 +77,16 @@ return {
           autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
         augroup end
 
-        xmap <leader>a  <Plug>(coc-codeaction-selected)
-        nmap <leader>a  <Plug>(coc-codeaction-selected)
+        xmap <leader>ca  <Plug>(coc-codeaction-selected)
+        nmap <leader>ca  <Plug>(coc-codeaction-selected)
 
-        nmap <leader>ac  <Plug>(coc-codeaction-cursor)
-        nmap <leader>as  <Plug>(coc-codeaction-source)
-        nmap <leader>gf  <Plug>(coc-fix-current)
+        nmap <leader>cc  <Plug>(coc-codeaction-cursor)
+        nmap <leader>cS  <Plug>(coc-codeaction-source)
+        nmap <leader>cx  <Plug>(coc-fix-current)
 
-        nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-        xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
-        nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+        nmap <silent> <leader>cR <Plug>(coc-codeaction-refactor)
+        xmap <silent> <leader>cR  <Plug>(coc-codeaction-refactor-selected)
+        nmap <silent> <leader>cR  <Plug>(coc-codeaction-refactor-selected)
 
         nmap <leader>cl  <Plug>(coc-codelens-action)
 
@@ -117,14 +117,14 @@ return {
 
         set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-        nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-        nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-        nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-        nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-        nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-        nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-        nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-        nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+        nnoremap <silent><nowait> <space>sd  :<C-u>CocList diagnostics<cr>
+        nnoremap <silent><nowait> <space>se  :<C-u>CocList extensions<cr>
+        nnoremap <silent><nowait> <space>sc  :<C-u>CocList commands<cr>
+        nnoremap <silent><nowait> <space>so  :<C-u>CocList outline<cr>
+        nnoremap <silent><nowait> <space>ss  :<C-u>CocList -I symbols<cr>
+        nnoremap <silent><nowait> <space>sj  :<C-u>CocNext<CR>
+        nnoremap <silent><nowait> <space>sk  :<C-u>CocPrev<CR>
+        nnoremap <silent><nowait> <space>sp  :<C-u>CocListResume<CR>
       ]])
     end,
   },
