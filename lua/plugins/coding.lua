@@ -69,7 +69,7 @@ return {
         nmap <leader>cr <Plug>(coc-rename)
 
         xmap <leader>cf  <Plug>(coc-format-selected)
-        nmap <leader>cf  <Plug>(coc-format-selected)
+        nmap <leader>cf  :Format<CR>
 
         augroup mygroup
           autocmd!
