@@ -35,7 +35,22 @@ return {
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniFilesBufferCreate",
         callback = function(args)
-          vim.keymap.set("n", "q", require("mini.files").close, { buffer = args.data.buf_id })
+          local close_action = function()
+            require("mini.files").close()
+            -- If we are in an empty, nameless buffer with no other listed buffers, quit
+            if vim.fn.expand("%") == "" and vim.bo.filetype == "" and vim.fn.line("$") == 1 and vim.fn.getline(1) == "" then
+              -- Check if there are other listed buffers (files open)
+              local listed_buffers = vim.tbl_filter(function(b)
+                return vim.fn.buflisted(b) == 1
+              end, vim.api.nvim_list_bufs())
+              
+              if #listed_buffers <= 1 then
+                vim.cmd("quit")
+              end
+            end
+          end
+          
+          vim.keymap.set("n", "q", close_action, { buffer = args.data.buf_id })
         end,
       })
     end,
