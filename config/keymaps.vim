@@ -46,3 +46,7 @@ inoremap <C-Enter> <Esc>o
 cnoremap <C-A>		<Home>
 cnoremap <C-E>		<End>
 cnoremap <C-K>		<C-U>
+
+" === 命令缩写 ===
+" 强制退出缩写 :qqq -> :q!
+cnoreabbrev qqq q!
