@@ -1,0 +1,21 @@
+return {
+  { "easymotion/vim-easymotion" },
+  {
+    "rhysd/clever-f.vim",
+    init = function()
+      vim.g.clever_f_chars_match_any_signs = ";"
+      vim.g.clever_f_smart_case = 1
+    end,
+  },
+  { "tpope/vim-surround" },
+  { "tpope/vim-unimpaired" },
+  {
+    "tpope/vim-commentary",
+    keys = {
+      { "<C-/>", ":Commentary<CR>", desc = "Toggle Comment" },
+    },
+  },
+  { "michaeljsmith/vim-indent-object" },
+  { "terryma/vim-expand-region" },
+  { "godlygeek/tabular" },
+}

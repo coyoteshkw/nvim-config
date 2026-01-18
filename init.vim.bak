@@ -1,0 +1,32 @@
+" 指定配置文件所在的目录 
+let g:config_dir = expand('~/.vim/config/plugin/')
+ 
+" 使用 glob() 函数查找所有配置文件 
+let g:config_files = glob(g:config_dir . '*.vim', 1, 1)  " *.vim 表示所有以 .vim 结尾的文件 
+ 
+" 循环加载每个配置文件 
+for file in g:config_files 
+  execute 'source ' . fnameescape(file) 
+endfor
+
+" source ~/.vim/config/plugin/coc.vim
+
+" ----------------------------------------------------------
+" 通用设置
+source ~/.vim/config/basic.vim
+
+" ----------------------------------------------------------
+" 键位映射
+source ~/.vim/config/keymaps.vim
+
+" ----------------------------------------------------------
+" 插件配置
+source ~/.vim/config/plugins.vim
+
+" ----------------------------------------------------------
+" 文件类型特定配置
+" source ~/.vim/config/filetype.vim
+
+" ----------------------------------------------------------
+" 外观设置 (主题、字体等)
+source ~/.vim/config/appearance.vim

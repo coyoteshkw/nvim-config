@@ -1,0 +1,5 @@
+{
+	"inlayHint.enable": true,
+	"inlayHint.display": false,
+	"inlayHint.position": "eol"
+}
