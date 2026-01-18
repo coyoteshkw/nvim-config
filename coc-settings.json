@@ -1,5 +1,32 @@
 {
 	"inlayHint.enable": true,
 	"inlayHint.display": false,
-	"inlayHint.position": "eol"
+	"inlayHint.position": "eol",
+	"suggest.completionItemKindLabels": {
+		"class": "",
+		"color": "",
+		"constant": "",
+		"constructor": "",
+		"enum": "",
+		"enumMember": "",
+		"event": "",
+		"field": "",
+		"file": "",
+		"folder": "",
+		"function": "",
+		"interface": "",
+		"keyword": "",
+		"method": "",
+		"module": "",
+		"operator": "",
+		"property": "",
+		"reference": "",
+		"snippet": "",
+		"struct": "",
+		"text": "",
+		"typeParameter": "",
+		"unit": "",
+		"value": "",
+		"variable": ""
+	}
 }
