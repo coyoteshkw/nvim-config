@@ -82,6 +82,7 @@ let &t_EI = "\e[2 q"
 " let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " 折叠
-" set foldmethod=indent
-" nnoremap god :if &foldlevel == 0 <Bar> set foldlevel=99 <Bar> else <Bar> set foldlevel=0 <Bar> endif<CR>
+set foldmethod=indent
+set foldlevel=99
+nnoremap god :if &foldlevel == 0 <Bar> set foldlevel=99 <Bar> else <Bar> set foldlevel=0 <Bar> endif<CR>
 set nowrap

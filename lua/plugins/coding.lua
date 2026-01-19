@@ -117,6 +117,23 @@ return {
 
         set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+        " CoC Intelligent Folding Configuration
+        function! AutoCocFold()
+          if CocAction('hasProvider', 'foldingRange')
+            " Silently attempt to fold
+            call CocActionAsync('fold', '', {err -> v:null})
+            let b:coc_fold_applied = 1
+          endif
+        endfunction
+
+        augroup CocAutoFold
+          autocmd!
+          " Update folds on save
+          autocmd BufWritePost * call AutoCocFold()
+          " Try to populate folds once when cursor holds (LSP likely ready)
+          autocmd CursorHold * if !get(b:, 'coc_fold_applied', 0) | call AutoCocFold() | endif
+        augroup END
+
         nnoremap <silent><nowait> <space>sd  :<C-u>CocList diagnostics<cr>
         nnoremap <silent><nowait> <space>se  :<C-u>CocList extensions<cr>
         nnoremap <silent><nowait> <space>sc  :<C-u>CocList commands<cr>
