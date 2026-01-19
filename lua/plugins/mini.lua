@@ -7,6 +7,14 @@ return {
     end,
   },
   {
+    "echasnovski/mini.ai",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("mini.ai").setup()
+    end,
+  },
+  {
     "echasnovski/mini.files",
     version = "*",
     lazy = false,

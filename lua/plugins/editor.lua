@@ -15,7 +15,7 @@ return {
       { "<C-/>", ":Commentary<CR>", desc = "Toggle Comment" },
     },
   },
-  { "michaeljsmith/vim-indent-object" },
+  -- { "michaeljsmith/vim-indent-object" },
   { "terryma/vim-expand-region" },
   { "godlygeek/tabular" },
 }
