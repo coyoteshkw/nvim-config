@@ -32,6 +32,12 @@ return {
         refresh = 50, -- refresh at most every 50ms
       },
       words = { enabled = true },
+      -- Enhanced UI modules
+      terminal = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      scope = { enabled = true },
     },
     keys = {
       { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },

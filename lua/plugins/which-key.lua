@@ -17,6 +17,13 @@ return {
       wk.add({
         { "<leader>b", group = "Buffer" },
         { "<leader>bd", desc = "Delete Buffer" },
+
+        { "<leader>a", group = "Opencode AI" },
+        { "<leader>aa", desc = "Ask" },
+        { "<leader>ac", desc = "Ask (@this)" },
+        { "<leader>ao", desc = "Operator" },
+        { "<leader>as", desc = "Actions/Select" },
+        { "<leader>at", desc = "Toggle" },
         
         { "<leader>c", group = "Code" },
         { "<leader>ca", desc = "Action (Selected)" },
