@@ -15,9 +15,13 @@ set encoding=utf-8
 set hlsearch
 filetype plugin indent on
 set autoindent
-set shiftwidth=4
 set backspace=2
-set tabstop=4
+"设置两缩进
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set softtabstop=2
+
 set wildmenu
 set wildmode=list:longest,full
 set ignorecase
