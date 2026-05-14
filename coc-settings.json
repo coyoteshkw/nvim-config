@@ -28,5 +28,9 @@
 		"unit": "",
 		"value": "",
 		"variable": ""
-	}
+	},
+	"diagnostic.errorSign": "󰅚 ",
+	"diagnostic.warningSign": "󰀪 ",
+	"diagnostic.infoSign": "󰋽 ",
+	"diagnostic.hintSign": "󰌵 "
 }
