@@ -36,7 +36,7 @@ return {
         { "<leader>cx", desc = "Fix Current" },
 
         { "<leader>f", group = "Find/File" },
-        { "<leader>ff", desc = "Recent Files (MRU)" },
+        { "<leader>ff", desc = "Search Recent Files" },
 
         { "<leader>g", group = "Git" },
         { "<leader>gb", desc = "Blame Line" },

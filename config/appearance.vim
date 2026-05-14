@@ -34,7 +34,7 @@ nnoremap gl : call Toggle_transparent()<CR>
 " => everforest
 " Set contrast.
 " Available values: 'hard', 'medium'(default), 'soft'
-let g:everforest_background = 'soft'
+let g:everforest_background = 'medium'
 
 " For better performance
 let g:everforest_better_performance = 1
@@ -59,6 +59,8 @@ let g:everforest_inlay_hints_background = 'dimmed' " none
 "
 set background=dark
 " set background=light
-colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+" colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 " colorscheme onedark
-" colorscheme everforest
+colorscheme everforest
+
+hi CocHighlightText guibg=#45475a ctermbg=238

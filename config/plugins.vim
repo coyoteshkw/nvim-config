@@ -58,7 +58,8 @@ let g:ctrlp_show_hidden = 0 " ctrl插件允许搜索隐藏文件
 let g:ctrlp_map = '<C-p>'
 
 " Quickly find and open a recently opened file
-map <leader>ff :CtrlPMRUFiles<CR>
+" map <leader>ff :CtrlPMRUFiles<CR>
+" map <leader>ff :Files<CR>
 
 " Quickly find and open a buffer
 map <leader>b :CtrlPBuffer<cr>

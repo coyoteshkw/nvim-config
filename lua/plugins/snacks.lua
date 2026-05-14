@@ -47,6 +47,15 @@ return {
       { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File Log" },
       { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
       { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+      -- Picker
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>sg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+      { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>sr", function() Snacks.picker.recent() end, desc = "Recent" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>s/", function() Snacks.picker.grep() end, desc = "Grep (Root Dir)" },
+      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
       -- Toggles
       { "<leader>tL", function() Snacks.toggle.line_number():toggle() end, desc = "Toggle Line Numbers" },
       { "<leader>tr", function() Snacks.toggle.option("relativenumber"):toggle() end, desc = "Toggle Relative Line Numbers" },

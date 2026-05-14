@@ -1,5 +1,5 @@
 return {
-  { "easymotion/vim-easymotion" },
+  -- { "easymotion/vim-easymotion" },
   {
     "rhysd/clever-f.vim",
     init = function()
