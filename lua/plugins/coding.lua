@@ -46,7 +46,7 @@ return {
 
       -- Make <CR> to accept selected completion item or notify coc.nvim to format
 	  -- 这样enter就不会补全而是直接下一行
-      -- keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+      keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
       -- Use <c-j> to trigger snippets c-j可以换到下一个跳转点
       keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
@@ -141,7 +141,8 @@ return {
       local scroll_opts = { silent = true, nowait = true, expr = true }
       keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', scroll_opts)
       keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', scroll_opts)
-      keyset("i", "<C-f>", 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', scroll_opts)
+      -- keyset("i", "<C-f>", 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', scroll_opts)
+      keyset("i", "<C-f>", [[coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"]], scroll_opts)
       keyset("i", "<C-b>", 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', scroll_opts)
       keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', scroll_opts)
       keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', scroll_opts)

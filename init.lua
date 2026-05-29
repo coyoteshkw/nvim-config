@@ -30,3 +30,11 @@ source_config("keymaps.vim")
 -- Source appearance settings (colorscheme, etc.)
 -- This must be done AFTER plugins are loaded so the colorschemes are available
 source_config("appearance.vim")
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_set_hl(0, "CocErrorHighlight", { underline = true, sp = "Red" })
+        vim.api.nvim_set_hl(0, "CocWarningHighlight", { underline = true, sp = "Orange" })
+    end
+})

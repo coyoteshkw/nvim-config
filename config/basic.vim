@@ -9,6 +9,7 @@ syntax on
 set mouse=a
 set hidden
 set number
+set numberwidth=4
 set relativenumber
 set nobackup
 set encoding=utf-8

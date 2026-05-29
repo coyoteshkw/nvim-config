@@ -64,3 +64,9 @@ set background=dark
 colorscheme everforest
 
 hi CocHighlightText guibg=#45475a ctermbg=238
+
+" 将诊断高亮改为直线（underline）
+hi CocErrorHighlight   gui=underline
+hi CocWarningHighlight gui=underline
+hi CocInfoHighlight    gui=underline
+hi CocHintHighlight    gui=underline
