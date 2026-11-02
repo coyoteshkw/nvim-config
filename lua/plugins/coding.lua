@@ -130,15 +130,29 @@ return {
       keyset("x", "ac", "<Plug>(coc-classobj-a)", codeaction_opts)
       keyset("o", "ac", "<Plug>(coc-classobj-a)", codeaction_opts)
 
-      -- Remap <C-f> and <C-b> to scroll float windows/popups
-      local scroll_opts = { silent = true, nowait = true, expr = true }
-      keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', scroll_opts)
-      keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', scroll_opts)
-      -- keyset("i", "<C-f>", 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', scroll_opts)
-      keyset("i", "<C-f>", [[coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"]], scroll_opts)
-      keyset("i", "<C-b>", 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', scroll_opts)
-      keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', scroll_opts)
-      keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', scroll_opts)
+      -- <C-f>/<C-b>：有浮窗（补全文档等）时滚动浮窗，否则按 Emacs 习惯
+      -- 在插入模式前后移动一个字符、普通模式翻页。
+      --
+      -- 注意：这里必须用 Lua 函数做 expr 映射，不能写成 vimscript 表达式字符串。
+      -- 后者返回的 "<Right>" 会被 replace_keycodes 替换成内部键码 \x80kr，
+      -- 而这串字节会被当作文本插入缓冲区（表现为输入 <80>kr），而不是执行按键。
+      local function float_scroll_or(direction, fallback_key)
+        return function()
+          if vim.fn.exists("*coc#float#has_scroll") == 1 and vim.fn["coc#float#has_scroll"]() == 1 then
+            vim.fn["coc#float#scroll"](direction)
+            return ""
+          end
+          return fallback_key
+        end
+      end
+
+      local scroll_opts = { silent = true, nowait = true, expr = true, replace_keycodes = true }
+      keyset("n", "<C-f>", float_scroll_or(1, "<C-f>"), scroll_opts)
+      keyset("n", "<C-b>", float_scroll_or(0, "<C-b>"), scroll_opts)
+      keyset("i", "<C-f>", float_scroll_or(1, "<Right>"), scroll_opts)
+      keyset("i", "<C-b>", float_scroll_or(0, "<Left>"), scroll_opts)
+      keyset("v", "<C-f>", float_scroll_or(1, "<C-f>"), scroll_opts)
+      keyset("v", "<C-b>", float_scroll_or(0, "<C-b>"), scroll_opts)
 
       -- Use CTRL-S for selections ranges
       keyset("n", "<C-s>", "<Plug>(coc-range-select)", { silent = true })
