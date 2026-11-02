@@ -48,13 +48,13 @@ map("c", "<C-K>", "<C-U>", { desc = "Cmdline: kill to start" })
 -- 强制退出缩写：:qqq -> :q!
 vim.cmd([[cnoreabbrev qqq q!]])
 
--- === 浮窗滚动：<C-f> / <C-b> ===
--- 浮窗（补全文档、诊断详情等）打开时滚动浮窗；没有浮窗时普通/可视模式
--- 照常翻页，插入模式不做任何事。
+-- === <C-f> / <C-b> ===
+-- 普通/可视模式：浮窗（补全文档、诊断详情等）打开时滚动浮窗，否则照常翻页。
+-- 插入模式：不参与浮窗滚动，就是单纯的前后移动一个字符（Emacs 习惯）。
 --
--- 必须用 Lua 函数做 expr 映射。写成 vimscript 表达式字符串时，返回的
--- "<Right>" 会被 replace_keycodes 换成内部键码 \x80kr，那串字节会被当作
--- 文本插入缓冲区（表现为输入 <80>kr），而不是执行按键。
+-- 普通/可视模式必须用 Lua 函数做 expr 映射。写成 vimscript 表达式字符串时，
+-- 返回的 "<C-f>" 会被 replace_keycodes 换成内部键码，那串字节可能被当作文本
+-- 插入缓冲区（同类问题见提交 b0edf24，表现为输入 <80>kr）。
 local function scroll_float(direction)
   if vim.fn.exists("*coc#float#has_scroll") == 1 and vim.fn["coc#float#has_scroll"]() == 1 then
     vim.fn["coc#float#scroll"](direction)
@@ -74,6 +74,7 @@ local float_opts = { silent = true, nowait = true, expr = true, replace_keycodes
 
 map({ "n", "v" }, "<C-f>", function() return float_or(1, "<C-f>") end, float_opts)
 map({ "n", "v" }, "<C-b>", function() return float_or(0, "<C-b>") end, float_opts)
--- 插入模式没有 fallback：没浮窗时按下去什么都不发生
-map("i", "<C-f>", function() return float_or(1, "") end, float_opts)
-map("i", "<C-b>", function() return float_or(0, "") end, float_opts)
+
+-- 插入模式：普通映射，不走 expr，避免键码替换那一层
+map("i", "<C-f>", "<Right>", { silent = true, desc = "Forward one character" })
+map("i", "<C-b>", "<Left>", { silent = true, desc = "Backward one character" })
