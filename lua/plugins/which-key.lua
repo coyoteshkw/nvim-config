@@ -15,8 +15,8 @@ return {
       wk.setup(opts)
 
       wk.add({
-        { "<leader>b", group = "Buffer" },
-        { "<leader>bd", desc = "Delete Buffer" },
+        -- <leader><space>: smart find (snacks.picker.smart)
+        { "<leader><space>", desc = "Smart Find Files" },
 
         { "<leader>a", group = "Opencode AI" },
         { "<leader>aa", desc = "Ask" },
@@ -24,19 +24,31 @@ return {
         { "<leader>ao", desc = "Operator" },
         { "<leader>as", desc = "Actions/Select" },
         { "<leader>at", desc = "Toggle" },
-        
-        { "<leader>c", group = "Code" },
-        { "<leader>ca", desc = "Action (Selected)" },
-        { "<leader>cc", desc = "Action (Cursor)" },
-        { "<leader>cf", desc = "Format" },
-        { "<leader>cL", desc = "CodeLens" },
-        { "<leader>cr", desc = "Rename" },
-        { "<leader>cR", desc = "Refactor / Rename File" },
-        { "<leader>cS", desc = "Source Action" },
-        { "<leader>cx", desc = "Fix Current" },
 
-        { "<leader>f", group = "Find/File" },
-        { "<leader>ff", desc = "Search Recent Files" },
+        { "<leader>b", group = "Buffer" },
+        { "<leader>bd", desc = "Delete Buffer" },
+
+        -- <leader>c: code actions (all coc.nvim except cR)
+        { "<leader>c", group = "Code (CoC)" },
+        { "<leader>ca", desc = "Code Action (Visual/Select)" },
+        { "<leader>cc", desc = "Code Action (Cursor)" },
+        { "<leader>cf", desc = "Format" },
+        { "<leader>cl", desc = "CodeLens Action" },
+        { "<leader>cr", desc = "Rename Symbol" },
+        { "<leader>cR", desc = "Refactor (CoC)" },
+        { "<leader>cS", desc = "Source Action (Whole Buffer)" },
+        { "<leader>cx", desc = "Fix Current Diagnostic" },
+
+        -- <leader>f: find files / find inside files
+        { "<leader>f", group = "Find" },
+        { "<leader>ff", desc = "Find Files" },
+        { "<leader>fg", desc = "Find Git Files" },
+        { "<leader>fr", desc = "Recent Files" },
+        { "<leader>fb", desc = "Buffers" },
+        { "<leader>fk", desc = "Keymaps" },
+        { "<leader>fR", desc = "Rename File" },
+        { "<leader>f/", desc = "Find Text (Grep)" },
+        { "<leader>fw", desc = "Find Word / Selection" },
 
         { "<leader>g", group = "Git" },
         { "<leader>gb", desc = "Blame Line" },
@@ -54,7 +66,8 @@ return {
         { "<leader>hS", desc = "Stage Buffer" },
         { "<leader>hr", desc = "Reset Hunk" },
         { "<leader>hs", desc = "Stage Hunk" },
-        
+
+        -- <leader>s: coc.nvim lists
         { "<leader>s", group = "Search (CoC)" },
         { "<leader>sc", desc = "Commands" },
         { "<leader>sd", desc = "Diagnostics" },
@@ -63,11 +76,7 @@ return {
         { "<leader>sk", desc = "Prev Item" },
         { "<leader>so", desc = "Outline" },
         { "<leader>sp", desc = "Resume List" },
-        { "<leader>ss", desc = "Symbols" },
-
-        { "<leader>w", desc = "Save File" },
-        { "<leader>q", desc = "Quit" },
-        { "<leader>n", desc = "No Highlight" },
+        { "<leader>ss", desc = "Workspace Symbols" },
 
         { "<leader>t", group = "Toggle/Options" },
         { "<leader>tf", "<cmd>ToggleAutoFormat<cr>", desc = "Autoformat on Save" },
@@ -75,6 +84,12 @@ return {
         { "<leader>td", desc = "Diagnostics" },
         { "<leader>tr", desc = "Relative Line Numbers" },
         { "<leader>ts", desc = "Sign Column" },
+
+        { "<leader>e", desc = "File Explorer (mini.files)" },
+        { "<leader>un", desc = "Dismiss Notifications" },
+        { "<leader>w", desc = "Save File" },
+        { "<leader>q", desc = "Quit" },
+        { "<leader>n", desc = "No Highlight" },
       })
     end,
   },

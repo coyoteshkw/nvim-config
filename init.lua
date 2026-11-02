@@ -8,33 +8,15 @@ vim.g.maplocalleader = " "
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- 基础选项（缩进、UI、折叠、光标形状等）
+require("config.options")
+
+-- 键位映射
+require("config.keymaps")
+
 -- Enable the lazy.nvim plugin manager
 require("config.lazy")
 
--- Helper function to source Vimscript configuration files
-local function source_config(filename)
-  local config_path = vim.fn.stdpath("config") .. "/config/" .. filename
-  if vim.fn.filereadable(config_path) == 1 then
-    vim.cmd("source " .. config_path)
-  else
-    vim.notify("Config file not found: " .. config_path, vim.log.levels.WARN)
-  end
-end
-
--- Source basic settings (indentation, UI options, etc.)
-source_config("basic.vim")
-
--- Source key mappings
-source_config("keymaps.vim")
-
--- Source appearance settings (colorscheme, etc.)
--- This must be done AFTER plugins are loaded so the colorschemes are available
-source_config("appearance.vim")
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-        vim.api.nvim_set_hl(0, "CocErrorHighlight", { underline = true, sp = "Red" })
-        vim.api.nvim_set_hl(0, "CocWarningHighlight", { underline = true, sp = "Orange" })
-    end
-})
+-- 配色方案与主题相关高亮
+-- 必须放在插件加载之后，否则配色方案还不可用
+require("config.colorscheme")

@@ -67,13 +67,16 @@ return {
   {
     "sainnhe/everforest",
     init = function()
-      -- Configuration from appearance.vim
-      vim.g.everforest_background = "soft"
+      -- everforest is the active colorscheme (see config/appearance.vim), so the
+      -- airline theme belongs to it as well. This is the single place that
+      -- decides the airline theme. `medium` matches config/appearance.vim.
+      vim.g.everforest_background = "medium"
       vim.g.everforest_better_performance = 1
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_diagnostic_text_highlight = 1
       vim.g.everforest_diagnostic_line_highlight = 1
       vim.g.everforest_inlay_hints_background = "dimmed"
+      vim.g.airline_theme = "everforest"
     end,
   },
   { "embark-theme/vim", name = "embark", branch = "main" },

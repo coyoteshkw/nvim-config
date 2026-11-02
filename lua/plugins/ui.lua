@@ -3,9 +3,9 @@ return {
     "vim-airline/vim-airline",
     dependencies = { "vim-airline/vim-airline-themes" },
     init = function()
-      -- Airline config from config/plugin/vim-airline.vim
-      vim.g.airline_theme = 'catppuccin' -- or bubblegum, everforest, iceberg as per comments
-      -- vim.g.airline_theme = 'everforest' -- Uncomment if using everforest
+      -- Single source of truth for the airline theme is lua/plugins/themes.lua
+      -- (g:airline_theme is set there, matching the active colorscheme).
+      -- Airline look & feel only:
       vim.g.airline_left_sep = ''
       vim.g.airline_left_alt_sep = ''
       vim.g.airline_right_sep = ''

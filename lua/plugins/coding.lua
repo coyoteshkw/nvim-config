@@ -1,12 +1,12 @@
 return {
-  {
-    "vimwiki/vimwiki",
-    init = function()
-      vim.g.vimwiki_list = {
-        { path = "~/Documents/vimwiki", path_html = "~/Documents/vimwiki_public_html/" },
-      }
-    end,
-  },
+  -- {
+  --   "vimwiki/vimwiki",
+  --   init = function()
+  --     vim.g.vimwiki_list = {
+  --       { path = "~/Documents/vimwiki", path_html = "~/Documents/vimwiki_public_html/" },
+  --     }
+  --   end,
+  -- },
   {
     "preservim/vim-markdown",
     ft = "markdown",
@@ -18,17 +18,8 @@ return {
     "neoclide/coc.nvim",
     branch = "release",
     config = function()
-      -- Some servers have issues with backup files, see #649
-      vim.opt.backup = false
-      vim.opt.writebackup = false
-
-      -- Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
-      -- delays and poor user experience
-      vim.opt.updatetime = 300
-
-      -- Always show the signcolumn, otherwise it would shift the text each time
-      -- diagnostics appeared/became resolved
-      vim.opt.signcolumn = "yes"
+      -- 注意：backup / writebackup / updatetime / signcolumn 已在
+      -- lua/config/options.lua 统一设置，这里不再重复。
 
       local keyset = vim.keymap.set
       -- Autocomplete
@@ -40,12 +31,13 @@ return {
       -- Use Tab for trigger completion with characters ahead and navigate
       -- local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
       -- keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-	  local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-	  vim.keymap.set("i", "<TAB>", [[coc#pum#visible() ? coc#pum#select_confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()]], opts)
+      local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
+      vim.keymap.set("i", "<TAB>",
+        [[coc#pum#visible() ? coc#pum#select_confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()]], opts)
       keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
       -- Make <CR> to accept selected completion item or notify coc.nvim to format
-	  -- 这样enter就不会补全而是直接下一行
+      -- 这样enter就不会补全而是直接下一行
       keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
       -- Use <c-j> to trigger snippets c-j可以换到下一个跳转点
@@ -74,6 +66,7 @@ return {
           vim.api.nvim_command("!" .. vim.o.keywordprg .. " " .. cw)
         end
       end
+
       keyset("n", "gk", "<CMD>lua _G.show_docs()<CR>", { silent = true })
 
       -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
@@ -163,12 +156,23 @@ return {
       -- Add (Neo)Vim's native statusline support
       vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
-      -- CoC Intelligent Folding Configuration
+      -- CoC 智能折叠
+      -- 修复：coc 的 foldingRange 折叠依赖 foldmethod=manual，而全局默认是
+      -- indent（见 lua/config/options.lua），此前两者互相失效。现在只有在
+      -- 当前缓冲区确实有 LSP 折叠范围时，才把它切换成 manual。
       function _G.AutoCocFold()
-        if vim.fn.CocAction("hasProvider", "foldingRange") then
-          pcall(vim.fn.CocActionAsync, "fold", "", function() end)
-          vim.b.coc_fold_applied = 1
+        if vim.fn["coc#rpc#ready"]() == 0 then
+          return
         end
+        local ok, has_provider = pcall(vim.fn.CocAction, "hasProvider", "foldingRange")
+        if not (ok and has_provider) then
+          return
+        end
+        if vim.wo.foldmethod ~= "manual" then
+          vim.wo.foldmethod = "manual"
+        end
+        pcall(vim.fn.CocActionAsync, "fold", "", function() end)
+        vim.b.coc_fold_applied = 1
       end
 
       local fold_group = vim.api.nvim_create_augroup("CocAutoFold", { clear = true })

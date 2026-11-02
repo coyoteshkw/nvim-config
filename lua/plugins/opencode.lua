@@ -11,7 +11,7 @@ return {
           enabled = "snacks", -- Use snacks.terminal
         },
       }
-      
+
       -- Required for opts.events.reload (auto-reloading buffers modified by AI)
       vim.o.autoread = true
 
@@ -20,7 +20,7 @@ return {
 
       -- Ask AI (General)
       vim.keymap.set({ "n", "x" }, "<leader>aa", function() opencode.ask() end, { desc = "Ask Opencode" })
-      
+
       -- Ask AI with Context (@this)
       vim.keymap.set({ "n", "x" }, "<leader>ac", function() opencode.ask("@this: ") end, { desc = "Ask Opencode (@this)" })
 

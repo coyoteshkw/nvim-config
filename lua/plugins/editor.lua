@@ -7,8 +7,8 @@ return {
       vim.g.clever_f_smart_case = 1
     end,
   },
-  { "tpope/vim-surround" },
-  { "tpope/vim-unimpaired" },
+  { "tpope/vim-surround", lazy = false },
+  { "tpope/vim-unimpaired", lazy = false },
   {
     "tpope/vim-commentary",
     keys = {
@@ -16,6 +16,6 @@ return {
     },
   },
   -- { "michaeljsmith/vim-indent-object" },
-  { "terryma/vim-expand-region" },
-  { "godlygeek/tabular" },
+  { "terryma/vim-expand-region", lazy = false },
+  { "godlygeek/tabular", cmd = { "Tabularize" } },
 }
