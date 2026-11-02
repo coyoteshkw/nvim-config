@@ -3,6 +3,8 @@
   "inlayHint.display": false,
   "inlayHint.position": "eol",
 
+  "git.enableGutters": false,
+
   "Lua.runtime.version": "LuaJIT",
   "Lua.workspace.library": [
     "/opt/homebrew/opt/neovim/share/nvim/runtime/lua"
