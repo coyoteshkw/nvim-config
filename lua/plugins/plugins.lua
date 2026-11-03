@@ -1,4 +1,19 @@
 return {
+  {
+    "preservim/vim-markdown",
+    ft = "markdown",
+    init = function()
+      vim.g.vim_markdown_borderless_table = 1
+    end,
+  },
+  "xheisenbugx/org.nvim",
+  main = "org",
+  lazy = false, -- startup cost is small: heavy modules load on first use
+  opts = {
+    org_directory = "~/Documents/org",
+    agenda_files = { "~/Documents/org/**/*.org" },
+    default_notes_file = "~/Documents/org/refile.org",
+  },
   -- { "easymotion/vim-easymotion" },
   {
     "rhysd/clever-f.vim",
