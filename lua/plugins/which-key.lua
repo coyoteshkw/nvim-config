@@ -85,7 +85,7 @@ return {
         { "<leader>tr",      desc = "Relative Line Numbers" },
         { "<leader>ts",      desc = "Sign Column" },
 
-        { "<leader>e",       desc = "File Explorer (mini.files)" },
+        { "<leader>e",       desc = "File Explorer" },
         { "<leader>un",      desc = "Dismiss Notifications" },
         { "<leader>w",       desc = "Save File" },
         { "<leader>q",       desc = "Quit" },

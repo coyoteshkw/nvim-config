@@ -7,7 +7,8 @@
 
   "Lua.runtime.version": "LuaJIT",
   "Lua.workspace.library": [
-    "/opt/homebrew/opt/neovim/share/nvim/runtime/lua"
+    "/opt/homebrew/opt/neovim/share/nvim/runtime/lua",
+    "${3rd}/luv/library"
   ],
   "Lua.diagnostics.globals": ["vim"],
   "suggest.completionItemKindLabels": {
