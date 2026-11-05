@@ -23,7 +23,8 @@ map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
 map({ "n", "x", "o" }, ";", ":", { desc = "Command-line" })
 
 -- 关闭搜索高亮
-map("n", "<leader>n", "<cmd>nohlsearch<cr>", { silent = true, desc = "No Highlight" })
+-- map("n", "<leader>n", "<cmd>nohlsearch<cr>", { silent = true, desc = "No Highlight" })
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- 折叠开关：0 <-> 99
 map("n", "god", function()
@@ -72,8 +73,12 @@ end
 
 local float_opts = { silent = true, nowait = true, expr = true, replace_keycodes = true }
 
-map({ "n", "v" }, "<C-f>", function() return float_or(1, "<C-f>") end, float_opts)
-map({ "n", "v" }, "<C-b>", function() return float_or(0, "<C-b>") end, float_opts)
+map({ "n", "v" }, "<C-f>", function()
+  return float_or(1, "<C-f>")
+end, float_opts)
+map({ "n", "v" }, "<C-b>", function()
+  return float_or(0, "<C-b>")
+end, float_opts)
 
 -- 插入模式：普通映射，不走 expr，避免键码替换那一层
 map("i", "<C-f>", "<Right>", { silent = true, desc = "Forward one character" })
