@@ -66,7 +66,9 @@ pcall(function()
   vim.o.t_EI = "\27[2 q"
 end)
 
--- 折叠：默认按缩进；coc 有 foldingRange 时自动切到 manual（见 lua/plugins/coding.lua）
+-- 折叠：默认按缩进（无 treesitter 解析器时的兜底）；
+-- 有解析器的文件类型由 lua/plugins/nvim-treesitter.lua 的 FileType 自动命令
+-- 改成 foldmethod=expr + v:lua.vim.treesitter.foldexpr()。
 opt.foldmethod = "indent"
 opt.foldlevel = 99
 

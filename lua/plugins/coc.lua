@@ -130,38 +130,29 @@ return {
       -- Add (Neo)Vim's native statusline support
       vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
-      -- CoC 智能折叠
-      -- coc 的 foldingRange 折叠依赖 foldmethod=manual，而全局默认是 indent
-      -- （见 lua/config/options.lua）。只有在当前缓冲区确实有 LSP 折叠范围时，
-      -- 才把它切换成 manual。
-      function _G.AutoCocFold()
-        if vim.fn["coc#rpc#ready"]() == 0 then
-          return
-        end
-        local ok, has_provider = pcall(vim.fn.CocAction, "hasProvider", "foldingRange")
-        if not (ok and has_provider) then
-          return
-        end
-        if vim.wo.foldmethod ~= "manual" then
-          vim.wo.foldmethod = "manual"
-        end
-        pcall(vim.fn.CocActionAsync, "fold", "", function() end)
-        vim.b.coc_fold_applied = 1
-      end
-
-      local fold_group = vim.api.nvim_create_augroup("CocAutoFold", { clear = true })
-      vim.api.nvim_create_autocmd("BufWritePost", {
-        group = fold_group,
-        callback = _G.AutoCocFold,
-      })
-      vim.api.nvim_create_autocmd("CursorHold", {
-        group = fold_group,
-        callback = function()
-          if not vim.b.coc_fold_applied then
-            _G.AutoCocFold()
-          end
-        end,
-      })
+      -- CoC 智能折叠 —— 已停用
+      -- 原因：coc 的 foldingRange 折叠强制 foldmethod=manual，会覆盖
+      -- treesitter 需要的 foldmethod=expr（见 lua/plugins/nvim-treesitter.lua），
+      -- 两者互斥。现在统一由 treesitter 提供折叠，这里不再自动切换 foldmethod。
+      -- 若将来想改回 LSP 折叠，把下面这段取消注释，并关闭 treesitter 的折叠设置。
+      --
+      -- function _G.AutoCocFold()
+      --   if vim.fn["coc#rpc#ready"]() == 0 then return end
+      --   local ok, has_provider = pcall(vim.fn.CocAction, "hasProvider", "foldingRange")
+      --   if not (ok and has_provider) then return end
+      --   if vim.wo.foldmethod ~= "manual" then vim.wo.foldmethod = "manual" end
+      --   pcall(vim.fn.CocActionAsync, "fold", "", function() end)
+      --   vim.b.coc_fold_applied = 1
+      -- end
+      --
+      -- local fold_group = vim.api.nvim_create_augroup("CocAutoFold", { clear = true })
+      -- vim.api.nvim_create_autocmd("BufWritePost", { group = fold_group, callback = _G.AutoCocFold })
+      -- vim.api.nvim_create_autocmd("CursorHold", {
+      --   group = fold_group,
+      --   callback = function()
+      --     if not vim.b.coc_fold_applied then _G.AutoCocFold() end
+      --   end,
+      -- })
 
       -- Mappings for CoCList
       local list_opts = { silent = true, nowait = true }
@@ -175,7 +166,7 @@ return {
       keyset("n", "<space>sp", ":<C-u>CocListResume<cr>", list_opts)
 
       -- Autoformat on save setup
-      vim.g.autoformat_enabled = true
+      vim.g.autoformat_enabled = false
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = vim.api.nvim_create_augroup("CocAutoFormat", { clear = true }),
         pattern = "*",
