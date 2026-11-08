@@ -1,19 +1,16 @@
+-- ZenMode 下行尾 ">" 标记的隐藏状态
+--
+-- 背景：'wrap' 开启时，若文本区可用列数为奇数，双宽字符（中文）放不进最后 1 列，
+-- Neovim 会在该列绘制 ">" 表示本行在下一视觉行继续。该字符使用 NonText 高亮，
+-- 不受 list / listchars / fillchars 控制（:h hl-NonText 有明确说明）。
+-- goyo.vim 之所以"没有"这个符号，是它的 s:tranquilize() 把 NonText 的前景色
+-- 设成了 Normal 的背景色，属于"隐形"而非"移除"。
+-- 这里复刻同样效果，并在退出 ZenMode 时还原，避免影响其他窗口。
+local zen_saved_nontext
+local zen_saved_colorscheme
+local zen_saved_snacks_indent
+
 return {
-  {
-    "preservim/vim-markdown",
-    ft = "markdown",
-    init = function()
-      vim.g.vim_markdown_borderless_table = 1
-    end,
-  },
-  "xheisenbugx/org.nvim",
-  main = "org",
-  lazy = false, -- startup cost is small: heavy modules load on first use
-  opts = {
-    org_directory = "~/Documents/org",
-    agenda_files = { "~/Documents/org/**/*.org" },
-    default_notes_file = "~/Documents/org/refile.org",
-  },
   -- { "easymotion/vim-easymotion" },
   {
     "rhysd/clever-f.vim",
@@ -24,6 +21,7 @@ return {
   },
   { "tpope/vim-surround",   lazy = false },
   { "tpope/vim-unimpaired", lazy = false },
+  -- 注释插件，可以用mini.comment代替，但我发现其实这个也挺好用的，而且gc{真的很不错啊
   {
     "tpope/vim-commentary",
     keys = {
@@ -37,160 +35,24 @@ return {
   {
     "chrisgrieser/nvim-origami",
     event = "VeryLazy",
-    opts = {}, -- required even when using default config
+    opts = {
+      foldtext = {
+        padding = { width = 3 },
+        lineCount = { template = "󰘖 %d", hlgroup = "Comment" },
+        diagnosticsCount = true,
+        gitsignsCount = true,
+      },
+      foldKeymaps = {
+        setup = true,               -- modifies `h`, `l`, `^`, and `$`
+        closeOnlyOnFirstColumn = false, -- `h` and `^` only fold in the 1st column
+        scrollLeftOnCaret = false,  -- `^` should scroll left (basically mapped to `0^`)
+      },
+    },                              -- required even when using default config
 
     -- recommended: disable vim's auto-folding
     init = function()
       vim.opt.foldlevel = 99
       vim.opt.foldlevelstart = 99
     end,
-  },
-  {
-    "y3owk1n/dotmd.nvim",
-    cmd = {
-      "DotMdCreateNote",
-      "DotMdCreateTodoToday",
-      "DotMdCreateJournal",
-      "DotMdInbox",
-      "DotMdNavigate",
-      "DotMdPick",
-      "DotMdOpen",
-    },
-    event = "VeryLazy",
-    ---@type DotMd.Config
-    opts = {
-      root_dir = "~/Documents/dotmd", -- set it to your desired directory or remain at it is
-      default_split = "float",        -- or "vertical" or "horizontal" or "none" based on your preference
-      rollover_todo = {
-        enabled = true,               -- enable rollover
-      },
-      picker = "snacks"               -- or "fzf" or "telescope" or "mini" based on your preference
-    },
-    keys = {
-      {
-        "<leader>nc",
-        function()
-          require("dotmd").create_note()
-        end,
-        desc = "[DotMd] Create new note",
-      },
-      {
-        "<leader>nt",
-        function()
-          require("dotmd").create_todo_today()
-        end,
-        desc = "[DotMd] Create todo for today",
-      },
-      {
-        "<leader>ni",
-        function()
-          require("dotmd").inbox()
-        end,
-        desc = "[DotMd] Inbox",
-      },
-      {
-        "<leader>nj",
-        function()
-          require("dotmd").create_journal()
-        end,
-        desc = "[DotMd] Create journal",
-      },
-      {
-        "<leader>np",
-        function()
-          require("dotmd").navigate("previous")
-        end,
-        desc = "[DotMd] Navigate to previous todo",
-      },
-      {
-        "<leader>nn",
-        function()
-          require("dotmd").navigate("next")
-        end,
-        desc = "[DotMd] Navigate to next todo",
-      },
-      {
-        "<leader>no",
-        function()
-          require("dotmd").open({
-            pluralise_query = true, -- recommended
-          })
-        end,
-        desc = "[DotMd] Open",
-      },
-      {
-        "<leader>sna",
-        function()
-          require("dotmd").pick()
-        end,
-        desc = "[DotMd] Everything",
-      },
-      {
-        "<leader>snA",
-        function()
-          require("dotmd").pick({
-            grep = true,
-          })
-        end,
-        desc = "[DotMd] Search everything grep",
-      },
-      {
-        "<leader>snn",
-        function()
-          require("dotmd").pick({
-            type = "notes",
-          })
-        end,
-        desc = "[DotMd] Search notes",
-      },
-      {
-        "<leader>snN",
-        function()
-          require("dotmd").pick({
-            type = "notes",
-            grep = true,
-          })
-        end,
-        desc = "[DotMd] Search notes grep",
-      },
-      {
-        "<leader>snt",
-        function()
-          require("dotmd").pick({
-            type = "todos",
-          })
-        end,
-        desc = "[DotMd] Search todos",
-      },
-      {
-        "<leader>snT",
-        function()
-          require("dotmd").pick({
-            type = "todos",
-            grep = true,
-          })
-        end,
-        desc = "[DotMd] Search todos grep",
-      },
-      {
-        "<leader>snj",
-        function()
-          require("dotmd").pick({
-            type = "journals",
-          })
-        end,
-        desc = "[DotMd] Search journal",
-      },
-      {
-        "<leader>snJ",
-        function()
-          require("dotmd").pick({
-            type = "journals",
-            grep = true,
-          })
-        end,
-        desc = "[DotMd] Search journal grep",
-      },
-    },
   },
 }
