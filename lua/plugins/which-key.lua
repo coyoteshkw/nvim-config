@@ -9,6 +9,9 @@ return {
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
+      -- classic or helix or modern
+      preset = "helix",
+      -- icons = { rules = false },
     },
     config = function(_, opts)
       local wk = require("which-key")
@@ -86,10 +89,16 @@ return {
         { "<leader>ts",      desc = "Sign Column" },
 
         { "<leader>e",       desc = "File Explorer" },
-        { "<leader>un",      desc = "Dismiss Notifications" },
+        { "<leader>tn",      desc = "Dismiss Notifications" },
         { "<leader>w",       desc = "Save File" },
         { "<leader>q",       desc = "Quit" },
         -- { "<leader>n", desc = "No Highlight" },
+
+        -- <leader>m: md-render
+        { "<leader>m",       group = "MD-Render", icon = '' },
+        -- <leader>n: dotmd
+        { "<leader>n",       group = "DotMd", icon = '' },
+
       })
     end,
   },
