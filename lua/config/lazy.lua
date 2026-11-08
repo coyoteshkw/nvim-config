@@ -11,7 +11,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- setup lazy.nvim
 require("lazy").setup({
+  -- import your plugins(folder)
   spec = {
     { import = "plugins" },
   },
@@ -22,7 +24,7 @@ require("lazy").setup({
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    -- version = "*", -- try installing the latest "stable" version for plugins that support semver
   },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {

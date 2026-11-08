@@ -43,9 +43,19 @@ opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
 
--- 命令行补全
+-- 命令行补全（配合 mini.cmdline 的 autocomplete）
+-- wildmenu : 显示候选
+-- wildmode : "noselect,full"
+--            noselect = 只弹出 pum，不预选、不自动改写输入
+--            full     = 按 <Tab> 时才把匹配项补进命令行
+--            注：不要只写 "list"会退回旧的 wildmenu 多列网格，
+--            候选多时会铺满整屏并出现 -- More --，而不是 pum 弹窗
+-- wildoptions: pum = 垂直 popup 菜单；fuzzy = 模糊匹配
 opt.wildmenu = true
-opt.wildmode = "list:longest,full"
+opt.wildmode = "noselect,full"
+opt.wildoptions = "pum,fuzzy"
+opt.pumheight = 10
+
 
 -- 响应速度 / 无提示音
 opt.belloff = "all"
@@ -88,6 +98,52 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     local line = vim.fn.line("'\"")
     if line > 0 and line <= vim.fn.line("$") and vim.bo.filetype ~= "commit" then
       vim.cmd([[normal! g`"]])
+    end
+  end,
+})
+
+-- markdown config
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    -- vim.opt_local.linebreak = true
+    -- vim.opt_local.showbreak = " "  -- 清空软换行后的行首标记
+    -- vim.opt_local.list = false     -- 关键：在 Markdown 中强制关闭 list
+    -- vim.opt_local.listchars:remove({ "extends", "precedes" })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    -- 只在软换行时，将 j/k 映射为视觉行移动
+    vim.keymap.set("n", "j", "gj", { buffer = true, desc = "Move down visual line" })
+    vim.keymap.set("n", "k", "gk", { buffer = true, desc = "Move up visual line" })
+  end,
+})
+
+-- ======================================
+--  Markdown 专属 scrolloff
+-- ======================================
+-- 目标：写 markdown 时光标不会贴到屏幕底部，
+--       下移时光标下方始终保留至少 12 行可见内容。
+-- 说明：
+--   * Neovim 0.11+ 的 scrolloff 是窗口级选项，且窗口级取值按
+--     「窗口 + 缓冲区」成对存储：切到其他文件类型会自动回退到
+--     全局值（上方 opt.scrolloff = 3），切回 markdown 又会恢复 12。
+--     因此这里只需单向设置，不必手工保存/还原。
+--   * markdown 开启了 wrap，scrolloff 以「屏幕行」计，
+--     这 12 行是肉眼可见的显示行，而不是缓冲区行。
+--   * 窗口高度不足（h < 25）时上下留白无法同时满足，
+--     Vim 会把光标维持在屏幕中部，滚动行为依然正常。
+local MD_SCROLLOFF = 12
+
+vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
+  group = vim.api.nvim_create_augroup("MarkdownScrolloff", { clear = true }),
+  callback = function()
+    if vim.bo.filetype == "markdown" and vim.wo.scrolloff < MD_SCROLLOFF then
+      vim.wo.scrolloff = MD_SCROLLOFF
     end
   end,
 })
