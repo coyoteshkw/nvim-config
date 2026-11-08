@@ -71,13 +71,13 @@ return {
               local listed_buffers = vim.tbl_filter(function(b)
                 return vim.fn.buflisted(b) == 1
               end, vim.api.nvim_list_bufs())
-              
+
               if #listed_buffers <= 1 then
                 vim.cmd("quit")
               end
             end
           end
-          
+
           vim.keymap.set("n", "q", close_action, { buffer = args.data.buf_id })
         end,
       })
@@ -94,5 +94,25 @@ return {
         desc = "Files Explorer (mini.files)",
       },
     },
+  },
+  -- 行号栏：符号列留在行号右侧（模块默认 =lfs），但去掉 ▏ 分隔符
+  -- 背景：默认 spec 是 { format = '=lfs', sep = '▏' }，多出来的 ▏ 是
+  -- statuscolumn 自带的第 6 格竖线，与 snacks.indent 的缩进线不共列
+  -- （缩进线在正文第 0/2/4… 列，▏ 在正文左边界再往左一格），
+  -- 看起来像多了一条错位的缩进线，且整条 gutter 比内置多占 1 列。
+  -- 去掉 sep 后宽度回到 1(符号) + 4(行号) = 5 列，与安装插件前一致。
+  {
+    "nvim-mini/mini.statuscolumn",
+    version = false,
+    config = function()
+      local statuscolumn = require("mini.statuscolumn")
+      statuscolumn.setup({
+        content = statuscolumn.gen_content.main({
+          { format = "=lfs", sep = "" }, -- 行号 → 折叠 → 符号，不留分隔符
+          { ltype = "virt", lnum = "•" }, -- 虚拟行
+          { ltype = "wrap", lnum = "↳" }, -- 软换行的续行
+        }),
+      })
+    end,
   },
 }
