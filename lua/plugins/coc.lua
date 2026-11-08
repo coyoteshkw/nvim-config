@@ -165,6 +165,10 @@ return {
       keyset("n", "<space>sk", ":<C-u>CocPrev<cr>", list_opts)
       keyset("n", "<space>sp", ":<C-u>CocListResume<cr>", list_opts)
 
+      -- 覆盖默认<C-e>的表现(不显示补全面板)，放在config中确保它在coc.nvim插件加载完成后才执行
+      -- 保证成功覆盖
+      keyset("i", "<C-e>", "<End>", { silent = true, desc = "Emacs-style jump to end of line" })
+
       -- Autoformat on save setup
       vim.g.autoformat_enabled = false
       vim.api.nvim_create_autocmd("BufWritePre", {
