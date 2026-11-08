@@ -17,7 +17,7 @@ return {
       vim.g.airline_section_z = '%p%% %l/%L'
     end,
   },
-  { "mhinz/vim-startify" },
+  -- { "mhinz/vim-startify" },
   {
     "machakann/vim-highlightedyank",
     init = function()

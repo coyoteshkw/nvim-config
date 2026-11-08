@@ -22,8 +22,8 @@ return {
         left = { "mark", "sign" }, -- priority of signs on the left (high to low)
         right = { "fold", "git" }, -- priority of signs on the right (high to low)
         folds = {
-          open = false, -- show open folds icons
-          git_hl = false, -- use Git Signs hl for fold icons
+          open = false,            -- show open folds icons
+          git_hl = false,          -- use Git Signs hl for fold icons
         },
         git = {
           -- patterns to match Git signs
@@ -38,31 +38,36 @@ return {
       picker = { enabled = true },
       notifier = { enabled = true },
       scope = { enabled = true },
+      dashboard = {
+        -- your dashboard configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
     },
     keys = {
-      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File Log" },
-      { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
-      { "<leader>fR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+      { "<leader>tn",      function() Snacks.notifier.hide() end,                                      desc = "Dismiss All Notifications" },
+      { "<leader>bd",      function() Snacks.bufdelete() end,                                          desc = "Delete Buffer" },
+      { "<leader>gg",      function() Snacks.lazygit() end,                                            desc = "Lazygit" },
+      { "<leader>gb",      function() Snacks.git.blame_line() end,                                     desc = "Git Blame Line" },
+      { "<leader>gf",      function() Snacks.lazygit.log_file() end,                                   desc = "Lazygit Current File Log" },
+      { "<leader>gl",      function() Snacks.lazygit.log() end,                                        desc = "Lazygit Log (cwd)" },
+      { "<leader>fR",      function() Snacks.rename.rename_file() end,                                 desc = "Rename File" },
       -- Picker
-      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { "<leader><space>", function() Snacks.picker.smart() end,                                       desc = "Smart Find Files" },
       -- <leader>f: find files
-      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
-      { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
-      { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
-      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>ff",      function() Snacks.picker.files() end,                                       desc = "Find Files" },
+      { "<leader>fg",      function() Snacks.picker.git_files() end,                                   desc = "Find Git Files" },
+      { "<leader>fr",      function() Snacks.picker.recent() end,                                      desc = "Recent Files" },
+      { "<leader>fb",      function() Snacks.picker.buffers() end,                                     desc = "Buffers" },
+      { "<leader>fk",      function() Snacks.picker.keymaps() end,                                     desc = "Keymaps" },
       -- <leader>f: find inside files
-      { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep (Root Dir)" },
-      { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Grep Word / Selection", mode = { "n", "x" } },
+      { "<leader>f/",      function() Snacks.picker.grep() end,                                        desc = "Grep (Root Dir)" },
+      { "<leader>fw",      function() Snacks.picker.grep_word() end,                                   desc = "Grep Word / Selection",       mode = { "n", "x" } },
       -- Toggles
-      { "<leader>tL", function() Snacks.toggle.line_number():toggle() end, desc = "Toggle Line Numbers" },
-      { "<leader>tr", function() Snacks.toggle.option("relativenumber"):toggle() end, desc = "Toggle Relative Line Numbers" },
-      { "<leader>td", function() Snacks.toggle.diagnostics():toggle() end, desc = "Toggle Diagnostics" },
-      { "<leader>ts", function() Snacks.toggle.option("signcolumn", { off = "no" }):toggle() end, desc = "Toggle Sign Column" },
+      { "<leader>tL",      function() Snacks.toggle.line_number():toggle() end,                        desc = "Toggle Line Numbers" },
+      { "<leader>tr",      function() Snacks.toggle.option("relativenumber"):toggle() end,             desc = "Toggle Relative Line Numbers" },
+      { "<leader>td",      function() Snacks.toggle.diagnostics():toggle() end,                        desc = "Toggle Diagnostics" },
+      { "<leader>ts",      function() Snacks.toggle.option("signcolumn", { off = "no" }):toggle() end, desc = "Toggle Sign Column" },
     },
   },
 }
