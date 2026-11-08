@@ -83,3 +83,13 @@ end, float_opts)
 -- 插入模式：普通映射，不走 expr，避免键码替换那一层
 map("i", "<C-f>", "<Right>", { silent = true, desc = "Forward one character" })
 map("i", "<C-b>", "<Left>", { silent = true, desc = "Backward one character" })
+
+-- neovide
+if vim.g.neovide then
+  -- 允许 Neovide 接收 Command 键的输入
+  vim.g.neovide_input_use_logo = 1
+  vim.keymap.set({ "n", "i", "v", "c", "t" }, "<D-v>", function()
+    -- 调用 Neovim 内置的粘贴函数，能更好地处理多行文本和缩进
+    vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+  end, { silent = true, desc = "Paste from system clipboard" })
+end
