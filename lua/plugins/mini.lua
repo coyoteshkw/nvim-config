@@ -1,21 +1,41 @@
 return {
+  -- nerd icons support
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     version = "*",
     config = function()
       require("mini.icons").setup()
     end,
   },
+  -- a = around i = inner
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     version = "*",
     event = "VeryLazy",
     config = function()
       require("mini.ai").setup()
     end,
   },
+  -- 内容的可视化移动，因alt键太热门而放弃
+  -- cmdline：补全弹窗 + 范围预览
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.cmdline",
+    version = false,
+    config = function()
+      require("mini.cmdline").setup({
+        -- 输入时自动弹出候选列表（只展示候选，是否插入文本由 'wildmode' 决定）
+        autocomplete = {
+          enable = true,
+          delay = 80,
+        },
+        -- 关闭「自动纠错」：默认行为会把打错的命令/选项名
+        -- 直接替换成最接近的合法项（如 :set relativenuber -> relativenumber）
+        autocorrect = { enable = false },
+      })
+    end,
+  },
+  {
+    "nvim-mini/mini.files",
     version = "*",
     lazy = false,
     config = function()
