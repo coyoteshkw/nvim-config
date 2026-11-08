@@ -1,7 +1,9 @@
+-- 当前正在使用的主题需要取消lazy = true
 return {
   { "morhetz/gruvbox" },
   {
     "catppuccin/nvim",
+    lazy = true,
     name = "catppuccin",
     priority = 1000,
     config = function()
@@ -61,9 +63,9 @@ return {
       })
     end,
   },
-  { "junegunn/seoul256.vim" },
-  { "joshdick/onedark.vim" },
-  { "ayu-theme/ayu-vim" },
+  { "junegunn/seoul256.vim", lazy = true },
+  { "joshdick/onedark.vim", lazy = true },
+  { "ayu-theme/ayu-vim", lazy = true },
   {
     "sainnhe/everforest",
     init = function()
@@ -79,6 +81,6 @@ return {
       vim.g.airline_theme = "everforest"
     end,
   },
-  { "embark-theme/vim", name = "embark", branch = "main" },
-  { "cocopon/iceberg.vim" },
+  { "embark-theme/vim", name = "embark", branch = "main", lazy = true },
+  { "cocopon/iceberg.vim", lazy = true },
 }
