@@ -3,27 +3,27 @@ return {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
-      -- signs = {
+      signs = {
       --   add = { text = " ▎" },
       --   change = { text = " ▎" },
-      --   delete = { text = " " },
-      --   topdelete = { text = " " },
+        delete = { text = " " },
+        topdelete = { text = " " },
       --   changedelete = { text = " ▎" },
       --   untracked = { text = " ▎" },
-      -- },
+      },
       -- 已暂存（staged）的符号在 gitsigns 里是另一张独立的表 signs_staged，
       -- 不会继承上面 signs 的自定义；它的默认值仍是 1 字符的 ┃ / ▁ / ▔ / ~。
       -- 单字符符号落在 %s 的第 1 格，而 " ▎" 落在第 2 格 —— 这就是暂存态与
       -- 未暂存态错开整整一列的原因。这里让 staged 用同样的 2 字符写法，
       -- 位置才对齐；两者的区别仍由 GitSignsStaged* 高亮（更暗）来体现。
       -- 注意：没有 untracked 项，未跟踪文件不存在「已暂存」状态。
-      -- signs_staged = {
+      signs_staged = {
       --   add = { text = " ▎" },
       --   change = { text = " ▎" },
-      --   delete = { text = " " },
-      --   topdelete = { text = " " },
+        delete = { text = " " },
+        topdelete = { text = " " },
       --   changedelete = { text = " ▎" },
-      -- },
+      },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
