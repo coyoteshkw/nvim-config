@@ -31,7 +31,7 @@ return {
   -- { "michaeljsmith/vim-indent-object" },
   { "terryma/vim-expand-region", lazy = false },
   { "godlygeek/tabular",         cmd = { "Tabularize" } },
-  -- 折叠插件
+  -- 更美观的折叠态展示插件
   {
     "chrisgrieser/nvim-origami",
     event = "VeryLazy",
@@ -55,4 +55,5 @@ return {
       vim.opt.foldlevelstart = 99
     end,
   },
+  { "tpope/vim-repeat" }
 }
