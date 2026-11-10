@@ -83,9 +83,15 @@ opt.foldmethod = "indent"
 opt.foldlevel = 99
 
 -- 在 80 列（或该文件类型的 textwidth）处显示一条竖线
+-- markdown 下不显示（含 .mdx，已在下方映射为 markdown）
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("ColorColumn", { clear = true }),
   callback = function()
+    local ft = vim.bo.filetype
+    if ft == "markdown" or ft == "mdx" then
+      vim.opt_local.colorcolumn = ""
+      return
+    end
     local tw = vim.bo.textwidth
     vim.opt_local.colorcolumn = tostring(tw > 0 and tw or 80)
   end,
