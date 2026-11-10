@@ -21,7 +21,7 @@ return {
         -- <leader><space>: smart find (snacks.picker.smart)
         { "<leader><space>", desc = "Smart Find Files" },
 
-        -- { "<leader>a",       group = "Opencode AI" },
+        { "<leader>a",       group = "Ask AI", icon = "󱚠" },
         -- { "<leader>aa",      desc = "Ask" },
         -- { "<leader>ac",      desc = "Ask (@this)" },
         -- { "<leader>ao",      desc = "Operator" },

@@ -3,8 +3,11 @@ return {
   {
     "nvim-mini/mini.icons",
     version = "*",
+    lazy = false,
     config = function()
       require("mini.icons").setup()
+      -- 让 mini.icons 模拟 nvim-web-devicons API
+      MiniIcons.mock_nvim_web_devicons()
     end,
   },
   -- a = around i = inner
