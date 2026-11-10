@@ -1,4 +1,19 @@
+-- ZenMode 下行尾 ">" 标记的隐藏状态
+--
+-- 背景：'wrap' 开启时，若文本区可用列数为奇数，双宽字符（中文）放不进最后 1 列，
+-- Neovim 会在该列绘制 ">" 表示本行在下一视觉行继续。该字符使用 NonText 高亮，
+-- 不受 list / listchars / fillchars 控制（:h hl-NonText 有明确说明）。
+-- goyo.vim 之所以"没有"这个符号，是它的 s:tranquilize() 把 NonText 的前景色
+-- 设成了 Normal 的背景色，属于"隐形"而非"移除"。
+-- 这里复刻同样效果，并在退出 ZenMode 时还原，避免影响其他窗口。
+local zen_saved_nontext
+local zen_saved_colorscheme
+local zen_saved_snacks_indent
+
 return {
+  -- 已移除：它通过 ftdetect/markdown.vim 里的 `*.mdx setfiletype markdown`
+  -- 把 .mdx 强制当成 markdown，从而让 render-markdown 生效。
+  -- 现在改为在 config/options.lua 里用 vim.filetype.add 统一把 .mdx 映射为 markdown。
   -- {
   --   "preservim/vim-markdown",
   --   ft = "markdown",
@@ -6,6 +21,36 @@ return {
   --     vim.g.vim_markdown_borderless_table = 1
   --   end,
   -- },
+  {
+    "tadmccorkle/markdown.nvim",
+    ft = "markdown", -- or 'event = "VeryLazy"'
+    opts = {
+      -- configuration here or empty for defaults
+      on_attach = function(bufnr)
+        local map = vim.keymap.set
+        local opts = { buffer = bufnr }
+        map("i", "<C-CR>", "<Cmd>MDListItemBelow<CR>", opts)
+        -- map({ 'n', 'i' }, '<M-L><M-O>', '<Cmd>MDListItemAbove<CR>', opts)
+        -- map('n', '<C-c><C-c>', '<Cmd>MDTaskToggle<CR>', opts)
+      end,
+
+    },
+  },
+  -- mkdnflow.nvim
+  -- {
+  --   'jakewvincent/mkdnflow.nvim',
+  --   config = function()
+  --     require('mkdnflow').setup({})
+  --   end
+  -- },
+  -- mdx support
+  -- 只为它的 after/queries/markdown/*.scm（JSX 注入 / 高亮）而保留。
+  -- 它注册的 extension = { mdx = "mdx" } 会被 config/options.lua 里的 pattern
+  -- 映射覆盖，所以 .mdx 最终仍是 filetype=markdown，不影响其余 markdown 插件。
+  {
+    "davidmh/mdx.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" }
+  },
   {
     "xheisenbugx/org.nvim",
     main = "org",
@@ -24,6 +69,8 @@ return {
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
+    -- .mdx 已在 config/options.lua 里统一映射为 filetype=markdown，
+    -- 因此这里保持默认 file_types = { 'markdown' } 即可覆盖 .md 与 .mdx。
     opts = {},
   },
   -- dotmd.nvim - 悬浮快速笔记
@@ -320,4 +367,35 @@ return {
       { "<leader>md", "<Plug>(md-render-demo)",        desc = "Markdown render demo" },
     },
   },
+  -- neowiki(vim-wiki替代)
+  {
+    "echaya/neowiki.nvim",
+    opts = {
+      wiki_dirs = {
+        -- neowiki.nvim supports both absolute and tilde-expanded paths
+        { name = "Work",     path = "~/Documents/blog/neowiki" },
+        { name = "Personal", path = "personal/wiki" },
+      },
+    },
+    keys = {
+      { "<leader>ww", "<cmd>lua require('neowiki').open_wiki()<cr>",          desc = "Open Wiki" },
+      { "<leader>wW", "<cmd>lua require('neowiki').open_wiki_floating()<cr>", desc = "Open Wiki in Floating Window" },
+      { "<leader>wT", "<cmd>lua require('neowiki').open_wiki_new_tab()<cr>",  desc = "Open Wiki in Tab" },
+    },
+  },
+  -- zenmode替代品
+  {
+    "shortcuts/no-neck-pain.nvim",
+    version = "*",
+    opts = {
+      width = 80,
+      -- buffers = {
+      --   wo = { fillchars = "eob: " },
+      --   scratchPad = { enabled = true },
+      --   bo = { filetype = "markdown" },
+      --   left = { scratchPad = { pathToFile = "~/todo.md" } },
+      --   right = { scratchPad = { pathToFile = "~/scratch.md" } },
+      -- },
+    }
+  }
 }

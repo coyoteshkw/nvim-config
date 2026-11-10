@@ -71,10 +71,10 @@ opt.clipboard = "unnamed"
 -- 插入/普通模式光标形状
 -- 说明：t_SI / t_EI 属于终端选项，无 TUI 的环境（headless）下不存在，
 -- 用 pcall 包住以免整个配置加载中断。
-pcall(function()
-  vim.o.t_SI = "\27[6 q"
-  vim.o.t_EI = "\27[2 q"
-end)
+-- pcall(function()
+--   vim.o.t_SI = "\27[6 q"
+--   vim.o.t_EI = "\27[2 q"
+-- end)
 
 -- 折叠：默认按缩进（无 treesitter 解析器时的兜底）；
 -- 有解析器的文件类型由 lua/plugins/nvim-treesitter.lua 的 FileType 自动命令
@@ -100,6 +100,28 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       vim.cmd([[normal! g`"]])
     end
   end,
+})
+
+-- session保存时不保存无内容空缓冲区
+vim.opt.sessionoptions:remove({ "blank" })
+-- vim.opt.sessionoptions = { "buffers", "curdir", "folds", "help", "tabpages", "winsize", "terminal" }
+
+-- ======================================
+--  .mdx 统一按 markdown 处理
+-- ======================================
+-- 让 .mdx 直接拿到 filetype=markdown，而不是维护一份「markdown + mdx」白名单。
+-- 这样 render-markdown、markdown.nvim、ftplugin/markdown.*，以及下方这些 FileType
+-- 钩子全部无需感知 mdx 的存在。
+--
+-- 关键点：mdx.nvim 用 vim.filetype.add({ extension = { mdx = "mdx" } }) 注册扩展名，
+-- 而 filetype.match 的匹配顺序是 filename → pattern → extension，pattern 先于 extension，
+-- 所以这里用 pattern 注册，与 mdx.nvim 的加载顺序无关，不会被覆盖。
+-- 注意：vim.filetype.add 会把 pattern 的 key 隐式包成 ^...$，因此这里不要自己写 $，
+-- 写 "^.*%.mdx$" 会被拼成 "^.*%.mdx$$"（末尾多一个字面量 $），永远匹配不上。
+-- mdx.nvim 仍保留：它的查询文件位于 after/queries/markdown/ 下，按「语言」而非
+-- filetype 生效；只要缓冲区使用 markdown 解析器（.md 与 .mdx 都是），JSX 注入照旧。
+vim.filetype.add({
+  pattern = { [".*%.mdx"] = "markdown" },
 })
 
 -- markdown config

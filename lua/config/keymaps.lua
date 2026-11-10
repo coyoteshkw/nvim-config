@@ -93,3 +93,10 @@ if vim.g.neovide then
     vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
   end, { silent = true, desc = "Paste from system clipboard" })
 end
+
+-- tmux support for comments: 终端里 <C-/> 实际发送的字节就是 <C-_> (0x1F)
+-- 注意：不能直接映射到 "gcc/stdgc"，因为 gc 是 operator-pending 的，
+-- 从映射 RHS 直接接上会吃掉后续输入；用 :normal 强制刷新一次即可。
+map("n", "<C-_>", ":<C-U>normal gcc<CR>", { silent = true, desc = "Toggle comment line" })
+map("x", "<C-_>", ":<C-U>normal gc<CR>",  { silent = true, desc = "Toggle comment selection" })
+
