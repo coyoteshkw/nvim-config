@@ -30,8 +30,6 @@ return {
         local map = vim.keymap.set
         local opts = { buffer = bufnr }
         map("i", "<C-CR>", "<Cmd>MDListItemBelow<CR>", opts)
-        -- map({ 'n', 'i' }, '<M-L><M-O>', '<Cmd>MDListItemAbove<CR>', opts)
-        -- map('n', '<C-c><C-c>', '<Cmd>MDTaskToggle<CR>', opts)
       end,
 
     },
@@ -226,7 +224,7 @@ return {
   {
     "folke/zen-mode.nvim",
     keys = {
-      { "<leader>z", ":ZenMode<CR>", desc = "Toggle ZenMode" },
+      { "<leader>zz", ":ZenMode<CR>", desc = "Toggle ZenMode" },
     },
     opts = {
       -- your configuration comes here
@@ -247,7 +245,7 @@ return {
       },
       -- 进入 ZenMode 时把 NonText 的前景色设为背景色，使行尾的 ">" 标记不可见
       -- （与 goyo.vim 的 s:tranquilize() 行为一致）；退出时原样还原。
-      on_open = function()
+      on_open = function(win)
         zen_saved_nontext = vim.api.nvim_get_hl(0, { name = "NonText" })
         zen_saved_colorscheme = vim.g.colors_name
         local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
@@ -259,6 +257,21 @@ return {
             ctermbg = normal.ctermbg,
           })
         end
+
+        -- ZenMode 内关闭 statuscolumn。
+        --
+        -- 原因：'wrap' 开启且行内含双宽字符（中文）时，若续行（v:virtnum > 0）的
+        -- statuscolumn 内容与首行不同，Neovim 的增量重绘会把该行部分单元格清空成
+        -- 空白——文字仍在缓冲区里，只是屏幕格子被写空，继续输入时空白还会沿行
+        -- 移动，退出插入模式触发整屏重绘后恢复。mini.statuscolumn 的「↳」软换行
+        -- 标记正是"续行与首行内容不同"的情形，实测在 ZenMode 下必然出现。
+        --
+        -- 全局保留「↳」（见 lua/plugins/mini.lua），只在这里把整条 statuscolumn
+        -- 置空：配合上面 window.options 的 number/relativenumber = false，写作时
+        -- 即为纯文本视图。zen 窗口是临时浮窗，关闭时该窗口级选项随窗口一起丢弃，
+        -- 父窗口的 statuscolumn 不受影响，故 on_close 无需还原。
+        -- 人类注：置空而不是关闭signcolumn的原因是这样可以保留Git提示符
+        vim.wo[win].statuscolumn = ""
 
         -- 关闭缩进线（含作用域高亮）。
         -- snacks.indent 的 decoration provider 每次重绘都会检查 config.filter，
@@ -286,6 +299,9 @@ return {
   -- twilight.nvim
   {
     "folke/twilight.nvim",
+    keys = {
+      { "<leader>uD", "<cmd>Twilight<CR>", desc = "Toggle Dim" },
+    },
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -296,7 +312,7 @@ return {
   {
     "junegunn/goyo.vim",
     keys = {
-      -- { "<leader>z", ":Goyo 80<CR>", desc = "Toggle Goyo" },
+      { "<leader>zg", ":Goyo 80<CR>", desc = "Toggle Goyo" },
     },
     init = function()
       -- 修复 goyo 下 render-markdown 代码块"糊成背景色"的问题
@@ -396,6 +412,9 @@ return {
       --   left = { scratchPad = { pathToFile = "~/todo.md" } },
       --   right = { scratchPad = { pathToFile = "~/scratch.md" } },
       -- },
-    }
+    },
+    keys = {
+      { "<leader>zn", "<cmd>NoNeckPain<cr>", desc = "Toggle NoNeckPain" },
+    },
   }
 }
