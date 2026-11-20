@@ -30,6 +30,7 @@ opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 opt.autoindent = true
 opt.backspace = "indent,eol,start"
+opt.confirm = true
 
 -- 缩进：两空格
 opt.tabstop = 2
@@ -116,8 +117,8 @@ vim.opt.sessionoptions:remove({ "blank" })
 --  .mdx 统一按 markdown 处理
 -- ======================================
 -- 让 .mdx 直接拿到 filetype=markdown，而不是维护一份「markdown + mdx」白名单。
--- 这样 render-markdown、markdown.nvim、ftplugin/markdown.*，以及下方这些 FileType
--- 钩子全部无需感知 mdx 的存在。
+-- 这样 render-markdown、markdown.nvim、after/ftplugin/markdown.lua，以及下方这些
+-- FileType 钩子全部无需感知 mdx 的存在。
 --
 -- 关键点：mdx.nvim 用 vim.filetype.add({ extension = { mdx = "mdx" } }) 注册扩展名，
 -- 而 filetype.match 的匹配顺序是 filename → pattern → extension，pattern 先于 extension，
@@ -128,27 +129,6 @@ vim.opt.sessionoptions:remove({ "blank" })
 -- filetype 生效；只要缓冲区使用 markdown 解析器（.md 与 .mdx 都是），JSX 注入照旧。
 vim.filetype.add({
   pattern = { [".*%.mdx"] = "markdown" },
-})
-
--- markdown config
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.wrap = true
-    -- vim.opt_local.linebreak = true
-    -- vim.opt_local.showbreak = " "  -- 清空软换行后的行首标记
-    -- vim.opt_local.list = false     -- 关键：在 Markdown 中强制关闭 list
-    -- vim.opt_local.listchars:remove({ "extends", "precedes" })
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    -- 只在软换行时，将 j/k 映射为视觉行移动
-    vim.keymap.set("n", "j", "gj", { buffer = true, desc = "Move down visual line" })
-    vim.keymap.set("n", "k", "gk", { buffer = true, desc = "Move up visual line" })
-  end,
 })
 
 -- ======================================

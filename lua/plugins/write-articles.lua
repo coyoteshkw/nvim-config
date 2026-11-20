@@ -69,7 +69,44 @@ return {
     ---@type render.md.UserConfig
     -- .mdx 已在 config/options.lua 里统一映射为 filetype=markdown，
     -- 因此这里保持默认 file_types = { 'markdown' } 即可覆盖 .md 与 .mdx。
-    opts = {},
+    opts = {
+      -- code block
+      code = {
+        -- 改为false会关闭代码块小图标，但可能也改了其他东西
+        sign = true,
+        language_icon = false, --关闭小图标，可以直接通过statuscolumn来查看
+        -- width = 'block',
+        -- min_width = 80,
+      },
+      heading = {
+        -- border = true,
+        -- render_modes = true, -- keep rendering in insert mode
+      },
+      link = {
+        wiki = { icon = " ", highlight = "RenderMarkdownWikiLink", scope_highlight = "RenderMarkdownWikiLink" },
+        image = " ",
+        custom = {
+          github = { pattern = "github", icon = " " },
+          gitlab = { pattern = "gitlab", icon = "󰮠 " },
+          youtube = { pattern = "youtube", icon = " " },
+          cern = { pattern = "cern.ch", icon = " " },
+        },
+        hyperlink = " ",
+      },
+      pipe_table = {
+        alignment_indicator = "─",
+        border = { "╭", "┬", "╮", "├", "┼", "┤", "╰", "┴", "╯", "│", "─" },
+      },
+      anti_conceal = {
+        -- disabled_modes = { "n" },
+        ignore = {
+          -- bullet = true, -- render bullet in insert mode
+          head_border = true,
+          head_background = true,
+        },
+      },
+
+    },
   },
   -- dotmd.nvim - 悬浮快速笔记
   {
@@ -380,7 +417,6 @@ return {
     keys = {
       { "<leader>mp", "<Plug>(md-render-preview)",     desc = "Markdown preview (toggle)" },
       { "<leader>mt", "<Plug>(md-render-preview-tab)", desc = "Markdown preview in tab (toggle)" },
-      { "<leader>md", "<Plug>(md-render-demo)",        desc = "Markdown render demo" },
     },
   },
   -- neowiki(vim-wiki替代)
@@ -416,5 +452,43 @@ return {
     keys = {
       { "<leader>zn", "<cmd>NoNeckPain<cr>", desc = "Toggle NoNeckPain" },
     },
-  }
+  },
+  -- 有序列表无序列表等自动补全
+  {
+    "gaoDean/autolist.nvim",
+    ft = {
+      "markdown",
+      "text",
+      "tex",
+      "plaintex",
+      "norg",
+    },
+    config = function()
+      require("autolist").setup()
+
+      vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>")
+      vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>")
+      -- vim.keymap.set("i", "<c-t>", "<c-t><cmd>AutolistRecalculate<cr>") -- an example of using <c-t> to indent
+      vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")
+      vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>")
+      vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>")
+      -- 回车还可以切换todolist状态
+      vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>")
+      vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>")
+
+      -- cycle list types with dot-repeat
+      vim.keymap.set("n", "<leader>cn", require("autolist").cycle_next_dr, { expr = true })
+      vim.keymap.set("n", "<leader>cp", require("autolist").cycle_prev_dr, { expr = true })
+
+      -- if you don't want dot-repeat
+      -- vim.keymap.set("n", "<leader>cn", "<cmd>AutolistCycleNext<cr>")
+      -- vim.keymap.set("n", "<leader>cp", "<cmd>AutolistCycleNext<cr>")
+
+      -- functions to recalculate list on edit
+      vim.keymap.set("n", ">>", ">><cmd>AutolistRecalculate<cr>")
+      vim.keymap.set("n", "<<", "<<<cmd>AutolistRecalculate<cr>")
+      vim.keymap.set("n", "dd", "dd<cmd>AutolistRecalculate<cr>")
+      vim.keymap.set("v", "d", "d<cmd>AutolistRecalculate<cr>")
+    end,
+  },
 }

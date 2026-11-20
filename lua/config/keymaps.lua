@@ -15,6 +15,10 @@ map({ "n", "x", "o" }, "J", "5j", { desc = "Move down 5 lines" })
 map({ "n", "x", "o" }, "K", "5k", { desc = "Move up 5 lines" })
 map("n", "<BS>", "ciw", { desc = "Change inner word" })
 
+-- 快速切换前后 buffer
+map("n", "H", "<cmd>bprevious<cr>", { silent = true, desc = "Previous buffer" })
+map("n", "L", "<cmd>bnext<cr>", { silent = true, desc = "Next buffer" })
+
 -- 保存退出
 map("n", "<leader>w", "<cmd>w<cr>", { desc = "Save File" })
 map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
