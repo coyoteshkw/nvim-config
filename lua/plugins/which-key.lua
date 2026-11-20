@@ -22,7 +22,7 @@ return {
         { "<leader><space>", desc = "Smart Find Files" },
 
         { "<leader>a",       group = "Ask AI", icon = "󱚠" },
-        -- { "<leader>aa",      desc = "Ask" },
+        { "<leader>aa",      desc = "Ask (pablopunk/pi.nvim)" },
         -- { "<leader>ac",      desc = "Ask (@this)" },
         -- { "<leader>ao",      desc = "Operator" },
         -- { "<leader>as",      desc = "Actions/Select" },
@@ -49,15 +49,23 @@ return {
         { "<leader>fr",      desc = "Recent Files" },
         { "<leader>fb",      desc = "Buffers" },
         { "<leader>fk",      desc = "Keymaps" },
+        { "<leader>fe",      desc = "Explorer (Root Dir)" },
+        { "<leader>fE",      desc = "Explorer (cwd)" },
+        { "<leader>fc",      desc = "Config Files" },
         { "<leader>fR",      desc = "Rename File" },
         { "<leader>f/",      desc = "Find Text (Grep)" },
         { "<leader>fw",      desc = "Find Word / Selection" },
 
         { "<leader>g",       group = "Git" },
         { "<leader>gb",      desc = "Blame Line" },
+        { "<leader>gd",      desc = "Diff (Hunks)" },
+        { "<leader>gD",      desc = "Diff (origin)" },
         { "<leader>gf",      desc = "Lazygit File Log" },
         { "<leader>gg",      desc = "Lazygit" },
-        { "<leader>gl",      desc = "Lazygit Log" },
+        { "<leader>gl",      desc = "Git Log" },
+        { "<leader>gL",      desc = "Git Log (cwd)" },
+        { "<leader>gs",      desc = "Git Status" },
+        { "<leader>gS",      desc = "Git Stash" },
 
         { "<leader>h",       group = "Hunk (Git)" },
         { "<leader>hD",      desc = "Diff This ~" },
@@ -72,24 +80,25 @@ return {
 
         -- <leader>s: coc.nvim lists
         { "<leader>s",       group = "Search (CoC)" },
-        { "<leader>sc",      desc = "Commands" },
+        { "<leader>sc",      desc = "Commands History" },
         { "<leader>sd",      desc = "Diagnostics" },
         { "<leader>se",      desc = "Extensions" },
         { "<leader>sj",      desc = "Next Item" },
         { "<leader>sk",      desc = "Prev Item" },
         { "<leader>so",      desc = "Outline" },
-        { "<leader>sp",      desc = "Resume List" },
+        { "<leader>sh",      desc = "Help Pages (Snacks)" },
+        { "<leader>sp",      desc = "Search Plugin Spec (Snacks)" },
         { "<leader>ss",      desc = "Workspace Symbols" },
 
         { "<leader>t",       group = "Toggle/Options" },
         { "<leader>tf",      "<cmd>ToggleAutoFormat<cr>",          desc = "Autoformat on Save" },
-        { "<leader>tL",      desc = "Line Numbers" },
+        -- { "<leader>tL",      desc = "Line Numbers" },
         { "<leader>td",      desc = "Diagnostics" },
-        { "<leader>tr",      desc = "Relative Line Numbers" },
-        { "<leader>ts",      desc = "Sign Column" },
+        -- { "<leader>tn",      desc = "Dismiss Notifications" },
+        -- { "<leader>tr",      desc = "Relative Line Numbers" },
+        -- { "<leader>ts",      desc = "Sign Column" },
 
         { "<leader>e",       desc = "File Explorer" },
-        { "<leader>tn",      desc = "Dismiss Notifications" },
         { "<leader>w",       desc = "Save File" },
         { "<leader>q",       desc = "Quit" },
         -- { "<leader>n", desc = "No Highlight" },
@@ -98,6 +107,10 @@ return {
         { "<leader>m",       group = "MD-Render", icon = '' },
         -- <leader>n: dotmd
         { "<leader>n",       group = "DotMd", icon = '' },
+        -- UI
+        { "<leader>u",       group = "UI", icon = '󱕷' },
+        -- zenmode
+        { "<leader>z",       group = "ZenMode", icon = '󰋱' },
 
       })
     end,
